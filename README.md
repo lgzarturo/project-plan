@@ -14,6 +14,7 @@ Este script en Python permite gestionar proyectos ingresando detalles como la fe
 ## Requisitos
 - Python 3.x
 - Librerías: `datetime`, `holidays`, `matplotlib`
+- Pipenv para el entorno de desarrollo
 
 ## Uso
 
@@ -43,17 +44,58 @@ Calcula la fecha de finalización del proyecto y las fechas de finalización de 
 ### `generate_gantt_chart(tasks, task_end_dates, start_date)`
 Genera un diagrama de Gantt para visualizar las tareas y sus fechas de finalización.
 
+## Metodología Utilizada
+
+Este script sigue un enfoque similar a las metodologías ágiles como Scrum y Kanban para la estimación y gestión del tiempo del proyecto.
+
 ## Fórmulas
 
+**Teoría**: Las fórmulas en el script parecen alinearse más con una metodología de estimación de tiempos basada en la capacidad y el rendimiento del equipo, a menudo utilizada en metodologías ágiles como Scrum o Kanban. Aquí hay un desglose y explicación de cómo estas metodologías se relacionan con las fórmulas del script:
+
 ### Capacidad del Proyecto
-\[ 
-\text{Capacidad} = \sum (\text{Factor de Enfoque Personal}) \times \text{Factor de Enfoque del Proyecto} \times \text{Número de Desarrolladores} 
-\]
+
+- En Scrum y Kanban, la capacidad del equipo se calcula en función de la disponibilidad y el enfoque de los miembros del equipo.
+
+```
+# Formula original
+project_capacity = sum(personal_focus_factor) * project_focus_factor * number_of_devs
+```
+
+- En el script, se calcula el factor de enfoque y después se obtiene el esfuerzo diario, como modificación de la formula original, luego se obtienen la horas totales en base al esfuerzo, los puntos de historia, para realizar el calculo de las horas restantes que servira para deteminar los dias que de trabajo.
 
 ### Duración de Tareas
-\[ 
-\text{Duración de la Tarea} = \frac{\text{Puntos de la Tarea}}{\text{Capacidad del Proyecto}} 
-\]
+
+- En las metodologías ágiles, la duración de las tareas se puede calcular dividiendo los puntos de historia (o puntos de tarea) por la capacidad del equipo. Esto es similar a cómo el script calcula la duración de las tareas:
+
+```
+# Formula original
+duration = task_points / project_capacity
+```
 
 ### Fecha de Finalización de Tareas
+
+- En Scrum y Kanban, se suele utilizar un enfoque iterativo y se considera la disponibilidad del equipo en días laborables. En el script, se excluyen los fines de semana y festivos:
+
 La fecha de finalización de cada tarea se obtiene sumando la duración de la tarea a la fecha de inicio de la tarea, excluyendo días no laborables y festivos.
+
+Se incrementa la fecha actual (current_start_date) excluyendo días no laborables y festivos:
+
+```
+end_date = start_date + duration_tasks  # considerando días laborables y festivos
+```
+
+### Puntos de historía
+
+**Metodologías Ágiles**: A menudo utilizan una única estimación basada en la capacidad y los puntos de historia, lo cual es más directo y simple.
+
+## Mejoras
+
+- [ ] Realizar una estimación en base a la metodología PERT.
+- [ ] Agregar la posibilidad de exportar a Excel o CSV.
+- [ ] Integrar más variables a la estimación de tiempos.
+- [ ] Soporte de trabajo en paralelo.
+- [ ] Mejorar la visualización del diagrama de Gantt.
+- [ ] Añadir la capacidad de definir dependencias entre las tareas, para determinar que tareas deben completarse antes que otras.
+- [ ] Asignar roles especificos como frontend, backend, ux para mejorar la estimación.
+- [ ] Para facilitar el calculo, hice que fuera el promedio en base al factor de esfuerzo, seria mejore permitir el calculo de la capacidad individual de cada desarrollador.
+- [ ] Pensar en un formato de historias de usuario, para que las estimaciones esten basadas en dichas historias, sus puntos y considerando la complejidad de cada tarea.
