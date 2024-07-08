@@ -56,29 +56,32 @@ def input_project_details() -> tuple:
     )
 
 
-def calculate_working_days(start_date, total_hours, holidays):
-    if isinstance(start_date, datetime.datetime):
-        start_date = start_date.date()
+def calculate_working_days(
+    start_date: datetime.date, total_hours: int, holidays: list[datetime.date]
+) -> tuple:
     end_date = start_date
     hours_remaining = total_hours
     working_days = 0
     while hours_remaining > 0:
         end_date += datetime.timedelta(days=1)
-        if end_date.weekday() < 5 and end_date not in holidays:
+        compare_date = end_date
+        if isinstance(compare_date, datetime.datetime):
+            compare_date = compare_date.date()
+        if end_date.weekday() < 5 and compare_date not in holidays:
             working_days += 1
             hours_remaining -= 8
     return end_date, working_days
 
 
 def calculate_project_end_date(
-    start_date,
-    number_of_devs,
-    personal_focus_factor,
-    project_focus_factor,
-    support_time,
-    testing_time,
-    tasks,
-):
+    start_date: datetime.date,
+    number_of_devs: int,
+    personal_focus_factor: list[float],
+    project_focus_factor: float,
+    support_time: float,
+    testing_time: float,
+    tasks: list,
+) -> tuple:
     total_focus_factor = sum(personal_focus_factor) / number_of_devs
     daily_effort = total_focus_factor * project_focus_factor * 8
     total_points = sum([points for _, points in tasks])
@@ -95,13 +98,17 @@ def calculate_project_end_date(
 
     for hours in task_hours_remaining:
         if hours > 0:
-            end_date, working_days = calculate_working_days(end_date, hours, holidays_mx)
+            end_date, working_days = calculate_working_days(
+                end_date, hours, holidays_mx
+            )
             task_end_dates.append(end_date)
 
     return total_points, task_end_dates
 
 
-def generate_gantt_chart(tasks, task_end_dates, start_date):
+def generate_gantt_chart(
+    tasks: list, task_end_dates: list[datetime.date], start_date: datetime.date
+) -> None:
     fig, ax = plt.subplots(figsize=(10, 6))
     current_start_date = start_date
     for i, ((task_name, _), end_date) in enumerate(zip(tasks, task_end_dates)):
@@ -155,7 +162,7 @@ if __name__ == "__main__":
         testing_time,
         tasks,
     )
-    start_date = datetime.datetime.strptime(start_date, "%d/%m/%Y")
+    start_date = datetime.datetime.strptime(start_date, "%d/%m/%Y").date()
 
     total_points, task_end_dates = calculate_project_end_date(
         start_date,

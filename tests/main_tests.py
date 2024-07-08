@@ -24,7 +24,7 @@ class TestProjectPlan(unittest.TestCase):
             start_date, total_hours, mock_holidays()
         )
         self.assertEqual(working_days, 2)
-        self.assertEqual(end_date, datetime.datetime(2023, 1, 4).date())
+        self.assertEqual(end_date, datetime.datetime(2023, 1, 4))
 
     @patch("main.holidays.MX")
     def test_calculate_project_end_date(self, mock_holidays):
