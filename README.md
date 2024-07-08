@@ -16,6 +16,12 @@ Este script en Python permite gestionar proyectos ingresando detalles como la fe
 - Librerías: `datetime`, `holidays`, `matplotlib`
 - Pipenv para el entorno de desarrollo
 
+## Instalar
+
+1. Se requiere [pipenv](https://pipenv.pypa.io/en/latest/) 
+2. El proyecto tiene un archivo `Pipfile` con las dependencias.
+3. Ejecutar el comando `pipenv install` para instalar las dependencias.
+
 ## Uso
 
 1. Ejecuta el script `python3 main.py`.
