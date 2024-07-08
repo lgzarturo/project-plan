@@ -36,9 +36,7 @@ class TestProjectPlan(unittest.TestCase):
         )
         self.assertEqual(total_points, 16)
         self.assertEqual(len(task_end_dates), 2)
-        self.assertTrue(
-            all(isinstance(date, datetime.date) for date in task_end_dates)
-        )
+        self.assertTrue(all(isinstance(date, datetime.date) for date in task_end_dates))
 
 
 if __name__ == "__main__":
