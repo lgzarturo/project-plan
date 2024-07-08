@@ -17,7 +17,7 @@ Este script en Python permite gestionar proyectos ingresando detalles como la fe
 
 ## Uso
 
-1. Ejecuta el script.
+1. Ejecuta el script `python3 main.py`.
 2. Ingresa los detalles del proyecto cuando se te solicite:
    - Fecha de inicio del proyecto
    - Número de desarrolladores
@@ -46,10 +46,14 @@ Genera un diagrama de Gantt para visualizar las tareas y sus fechas de finalizac
 ## Fórmulas
 
 ### Capacidad del Proyecto
-\[ \text{Capacidad} = \sum (\text{Factor de Enfoque Personal}) \times \text{Factor de Enfoque del Proyecto} \times \text{Número de Desarrolladores} \]
+\[ 
+\text{Capacidad} = \sum (\text{Factor de Enfoque Personal}) \times \text{Factor de Enfoque del Proyecto} \times \text{Número de Desarrolladores} 
+\]
 
 ### Duración de Tareas
-\[ \text{Duración de la Tarea} = \frac{\text{Puntos de la Tarea}}{\text{Capacidad del Proyecto}} \]
+\[ 
+\text{Duración de la Tarea} = \frac{\text{Puntos de la Tarea}}{\text{Capacidad del Proyecto}} 
+\]
 
 ### Fecha de Finalización de Tareas
 La fecha de finalización de cada tarea se obtiene sumando la duración de la tarea a la fecha de inicio de la tarea, excluyendo días no laborables y festivos.
