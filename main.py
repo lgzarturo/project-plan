@@ -177,6 +177,26 @@ def generate_gantt_chart(
     plt.show()
 
 
+def generate_burndown_chart(total_points, tasks, task_end_dates, start_date) -> None:
+    dates = [start_date + datetime.timedelta(days=i) for i in range((task_end_dates[-1] - start_date).days + 1)]
+    work_remaining = [total_points] * len(dates)
+    current_points = total_points
+    for date in dates:
+        for end_date, (title, points) in zip(task_end_dates, tasks):
+            if date >= end_date:
+                current_points -= points
+        work_remaining[dates.index(date)] = current_points
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(dates, work_remaining, label="Trabajo pendiente")
+    plt.xlabel("Fecha")
+    plt.ylabel("Puntos de historia restantes")
+    plt.title("Gráfico de Burndown del proyecto")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
 if __name__ == "__main__":
     # Se solicitan los detalles del proyecto
     (
@@ -219,3 +239,6 @@ if __name__ == "__main__":
 
     # Se genera un diagrama de Gantt para visualizar las tareas y sus fechas de finalización
     generate_gantt_chart(tasks, task_end_dates, start_date)
+
+    # Se genera un gráfico de Burndown para visualizar el progreso del proyecto
+    generate_burndown_chart(total_points, tasks, task_end_dates, start_date)
